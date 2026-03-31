@@ -1,0 +1,9 @@
+# IDEs
+/.vscode
+/.idea
+
+# Temp dirs & trash
+.DS_Store
+/temp
+/tmp
+.env
