@@ -83,7 +83,7 @@ jobs:
     needs:
       - plan
       - build
-    runs-on: ubuntu-
+    runs-on: ubuntu-latest
     steps:
     - name: All good
       run: echo All good!
