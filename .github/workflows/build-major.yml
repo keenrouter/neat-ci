@@ -84,6 +84,8 @@ jobs:
       - plan
       - build
     runs-on: ubuntu-
-    steps: []
+    steps:
+    - name: All good
+      run: echo All good!
 
           
