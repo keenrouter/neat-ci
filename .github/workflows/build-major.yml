@@ -65,7 +65,7 @@ jobs:
 
       - uses: docker/build-push-action@v7 
         if: ${{ !env.ACT || vars.LOCAL_PUSH }}
-        # gh act -W .github/workflows/build-major.yml --secret-file .env --var-file .env --var LOCAL_PUSH
+        # gh act -W ./github/workflows/build-major.yml --secret-file .env --var-file .env --var LOCAL_PUSH
         with:
           context: .
           file: Dockerfile
@@ -83,6 +83,7 @@ jobs:
     needs:
       - plan
       - build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-
+    steps: []
 
           
