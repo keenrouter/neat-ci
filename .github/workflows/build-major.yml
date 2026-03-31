@@ -2,14 +2,8 @@ name: build-major
 
 on:
   workflow_dispatch:
-  #schedule: [cron: '1 * * * *'] # every 1 hour # [cron: '10 0 */3 * *'] # every 3 days
-  #push:
-  #  branches: [master, main]
-  #  tags-ignore: ['**']
 
 env:
-  # github.repository as <account>/<repo>
-  #IMAGE_NAME: github.repository
   DOCKER_HUB_IMAGE_NAME: skipero/neat-ci
   IMAGE_NAME: keenrouter/neat-ci
 
@@ -37,7 +31,8 @@ jobs:
 
   build:
     name: Build the docker image (${{ matrix.targetTag }})
-    needs: [plan]
+    needs: 
+      - plan
     if: ${{ fromJSON(needs.plan.outputs.matrix).include[0] }} 
     # docs <https://bit.ly/2YHHXXs>
     runs-on: ubuntu-latest
@@ -68,9 +63,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: docker/build-push-action@v7 # Action page <https://github.com/docker/build-push-action>
+      - uses: docker/build-push-action@v7 
         if: ${{ !env.ACT || vars.LOCAL_PUSH }}
-        # gh act -j build --secret-file .env --var-file .env --var LOCAL_PUSH
+        # gh act -W .github/workflows/build-major.yml --secret-file .env --var-file .env --var LOCAL_PUSH
         with:
           context: .
           file: Dockerfile
@@ -82,4 +77,12 @@ jobs:
             ${{ env.DOCKER_HUB_IMAGE_NAME }}:latest
             ghcr.io/${{ env.IMAGE_NAME }}:${{ matrix.targetTag }}
             ghcr.io/${{ env.IMAGE_NAME }}:latest
+  
+  allgood:
+    name: All previous steps are OK
+    needs:
+      - plan
+      - build
+    runs-on: ubuntu-latest
+
           
