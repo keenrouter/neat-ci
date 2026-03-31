@@ -6,6 +6,7 @@ FROM ${FROM_IMAGE}
 
 RUN set -x && apt-get update && apt-get -yq install bash git curl unzip gnupg
 RUN curl https://get.volta.sh | bash
+RUN ~/.volta/bin/node -v || (~/.volta/bin/volta install node@24 && ~/.volta/bin/node -v)
 RUN useradd admin -m \
     && echo admin | passwd admin --stdin \
     && usermod -aG sudo admin
@@ -17,8 +18,8 @@ RUN curl -sSLo ./terraform-docs.tar.gz https://terraform-docs.io/dl/v0.21.0/terr
     && tar -xzf terraform-docs.tar.gz \
     && chmod +x terraform-docs \
     && mv terraform-docs /usr/local/bin/
-RUN npm i -g bun && npm i -g pnpm && ssh-keygen -A
+RUN ~/.volta/bin/npm i -g bun && ~/.volta/bin/npm i -g pnpm && ssh-keygen -A
 COPY sshd-actions.conf /etc/ssh/sshd_config.d/sshd-actions.conf
-RUN apt-get -yq install openjdk-25-jdk openssh-server \
+RUN apt-get -yq install openssh-server \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 

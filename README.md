@@ -9,13 +9,12 @@ Commands available in the image:
 - `git`
 - `curl`
 - `bash`
-- `node` (version 24)
+- `node` v24
 - `npm`
 - `pnpm`
 - `bun`
 - `volta`
 - `openssh`, log-in with `admin:admin`
-- `openjdk` (version 25), e.g. `java --version`
 - `tofu`, OpenTofu - like Terraform, but with MPL 2.0 license
 - `terraform-docs`
 
