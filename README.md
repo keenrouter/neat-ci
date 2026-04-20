@@ -9,16 +9,15 @@ Commands available in the image:
 - `git`
 - `curl`
 - `bash`
-- `node` v24
-- `npm`
-- `pnpm`
-- `bun`
-- `volta`
-- `openssh`, log-in with `admin:admin`
-- `tofu`, OpenTofu - like Terraform, but with MPL 2.0 license
+- `/root/.volta/bin/volta`: volta
+- `/root/.volta/bin/node`: Node v24
+- `/root/.volta/bin/npm`: npm
+- `/root/.volta/bin/bun`: bun
+- `openssh`, login `admin:admin`
+- `tofu`: OpenTofu - like Terraform, but MPL 2.0 license
 - `terraform-docs`
 
-> The image is based on the Debian OS (trixie).
+The image is based on the Debian OS (trixie).
 
 ### Docker registries:
 
@@ -44,12 +43,7 @@ Supported architectures:
 For example:
 
 ```sh
-$ docker run --rm \
-    --volume "$(pwd):/app" \
-    --workdir "/app" \
-    --user "$(id -u):$(id -g)" \
-    skipero/neat-ci:latest \
-    bun --version
+$ docker run skipero/neat-ci /root/.volta/bin/bunx -v
 ```
 
 Or using with `docker-compose.yml`:
@@ -57,7 +51,7 @@ Or using with `docker-compose.yml`:
 ```yml
 services:
   node:
-    image: skipero/neat-ci:1
+    image: skipero/neat-ci:latest
     volumes:
       - ./src:/app:rw
     working_dir: /app
